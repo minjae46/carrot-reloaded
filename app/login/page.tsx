@@ -1,24 +1,45 @@
+"use client";
+
 import FormButton from "@/components/form-btn";
 import FormInput from "@/components/form-input";
 import SocialLogin from "@/components/social-login";
+import { useFormState } from "react-dom";
+import { handleForm } from "./actions";
 
 export default function LogIn() {
+  const [state, action] = useFormState(handleForm, null);
   return (
     <div className="flex flex-col gap-10 py-8 px-6">
       <div className="flex flex-col gap-2 *:font-medium">
         <h1 className="text-2xl">안녕하세요!</h1>
         <h2 className="text-xl">Log in with email and password.</h2>
       </div>
-      <form className="flex flex-col gap-3">
-        <FormInput type="email" placeholder="Email" required errors={[]} />
-        <FormInput type="text" placeholder="Username" required errors={[]} />
+      <form action={action} className="flex flex-col gap-3">
         <FormInput
-          type="password"
-          placeholder="Password"
+          name="email"
+          type="email"
+          placeholder="Email"
           required
           errors={[]}
         />
-        <FormButton loading={false} text="Log in" />
+        <FormInput
+          name="username"
+          type="text"
+          placeholder="Username"
+          required
+          errors={[]}
+        />
+        <FormInput
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+          errors={state?.errors ?? []}
+        />
+        <FormButton text="Log in" />
+        {state?.logedIn === true ? (
+          <span className="text-green-500 font-medium">Welcome Back!</span>
+        ) : null}
       </form>
       <SocialLogin />
     </div>
