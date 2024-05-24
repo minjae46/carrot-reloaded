@@ -19,8 +19,6 @@ export default function CreateAccount() {
           name="username"
           type="text"
           placeholder="Username"
-          minLength={5}
-          maxLength={10}
           required
           errors={state?.fieldErrors.username}
         />
@@ -36,7 +34,6 @@ export default function CreateAccount() {
           name="password"
           type="password"
           placeholder="Password"
-          minLength={10}
           required
           errors={state?.fieldErrors.password}
         />
@@ -44,7 +41,6 @@ export default function CreateAccount() {
           name="confirmPassword"
           type="password"
           placeholder="Confirm Password"
-          minLength={10}
           required
           errors={state?.fieldErrors.confirmPassword}
         />

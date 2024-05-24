@@ -36,6 +36,6 @@ export async function logIn(prevState: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten(); // error를 알아보기 쉽게 formating 해줌
   } else {
-    return result;
+    console.log(result.data);
   }
 }

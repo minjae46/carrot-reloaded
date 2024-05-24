@@ -1,4 +1,5 @@
 "use server";
+
 import { z } from "zod";
 
 const passwordRegex = new RegExp(
@@ -15,11 +16,7 @@ const formSchema = z
       .min(5, "Way too short!!!")
       .max(10, "That is too looooong!")
       .toLowerCase()
-      .trim()
-      .refine(
-        (username) => !username.includes("potato"),
-        "No potatoes allowed!"
-      ),
+      .trim(),
     email: z.string().email().toLowerCase(),
     password: z
       .string()
