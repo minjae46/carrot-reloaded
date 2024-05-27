@@ -3,7 +3,8 @@
 import { z } from "zod";
 
 const passwordRegex = new RegExp(
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*?[#?!@$%^&*-]).+$/
+  // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*?[#?!@$%^&*-]).+$/
+  /^(?=.*\d).+$/
 );
 
 const formSchema = z
@@ -13,17 +14,17 @@ const formSchema = z
         invalid_type_error: "Username must be a string!",
         required_error: "Where is my username???",
       })
-      .min(5, "Way too short!!!")
-      .max(10, "That is too looooong!")
+      .min(5, "Username should be at least 5 characters long.")
       .toLowerCase()
       .trim(),
     email: z.string().email().toLowerCase(),
     password: z
       .string()
-      .min(10)
+      .min(10, "Password should be at least 10 characters long.")
       .regex(
         passwordRegex,
-        "Passwords must contain at least one UPPERCASE, lowercase, number and special characters."
+        // "Passwords must contain at least one UPPERCASE, lowercase, number and special characters."
+        "Password should contain at least one number (0123456789)."
       ),
     confirmPassword: z.string().min(10),
   })

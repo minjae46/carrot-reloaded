@@ -22,7 +22,7 @@ export async function smsLogIn(prevState: ActionState, formData: FormData) {
   const phone = formData.get("phone");
   const token = formData.get("token");
   if (!prevState.token) {
-    const result = phoneSchema.safeParse(phone);
+    const result = phoneSchema.safeParse(phone); //phone number가 유효한지 체크.
     if (!result.success) {
       return {
         token: false,
