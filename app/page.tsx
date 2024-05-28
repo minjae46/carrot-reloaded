@@ -1,4 +1,5 @@
 import Link from "next/link";
+import "@/lib/db";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
         </Link>
         <div className="flex gap-2">
           <span>이미 계정이 있나요?</span>
-          <Link href="/login" className="hover:underline">
+          <Link href="/log-in" className="hover:underline">
             로그인
           </Link>
         </div>

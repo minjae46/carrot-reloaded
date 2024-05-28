@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const passwordRegex = new RegExp(
@@ -10,26 +11,23 @@ const passwordRegex = new RegExp(
 const formSchema = z
   .object({
     username: z
-      .string({
-        invalid_type_error: "Username must be a string!",
-        required_error: "Where is my username???",
-      })
-      .min(5, "Username should be at least 5 characters long.")
+      .string()
+      .min(2, "Username should be at least 2 characters long.")
       .toLowerCase()
       .trim(),
     email: z.string().email().toLowerCase(),
     password: z
       .string()
-      .min(10, "Password should be at least 10 characters long.")
+      .min(8, "Password should be at least 8 characters long.")
       .regex(
         passwordRegex,
         // "Passwords must contain at least one UPPERCASE, lowercase, number and special characters."
         "Password should contain at least one number (0123456789)."
       ),
-    confirmPassword: z.string().min(10),
+    confirmPassword: z.string().min(8),
   })
-  .refine(({ password, confirmPassword }) => password !== confirmPassword, {
-    message: "Two passwords should be equal.",
+  .refine(({ password, confirmPassword }) => password === confirmPassword, {
+    message: "Both passwords should be equal.",
     path: ["confirmPassword"],
   });
 
@@ -44,6 +42,6 @@ export async function createAccount(prevState: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten(); // error를 알아보기 쉽게 formating 해줌
   } else {
-    console.log(result.data);
+    return redirect("log-in");
   }
 }
